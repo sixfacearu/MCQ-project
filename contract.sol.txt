@@ -1,0 +1,108 @@
+pragma solidity ^0.4.0;
+contract exam{
+    struct exams{
+        uint256 sno;
+        string ques;
+        string opt1;
+        string opt2;
+        string opt3;
+        string opt4;
+        uint ans;
+       
+    }
+    struct user{
+        uint256 id;
+        string name;
+        uint256 in_time;
+        uint256 mark;
+        
+    }
+    mapping(uint256=>user)public userdetail;
+    mapping(uint256=>exams) public admin;
+    uint256 sno=1;
+   // uint256 public adminid=123459;
+    //uint256[] public arr;
+    
+    uint256 public i=0;
+    uint256[] public arr1;//user detail id push
+    uint256[] public arr2;//user answer key push
+    uint256 public  array_length;
+    uint[] public answers; //push admin answerkey
+  
+  
+    function add(string ques,string opt1,string opt2,string opt3,string opt4,uint ans)public payable{
+        admin[sno].sno=sno;
+        admin[sno].ques=ques;
+        admin[sno].opt1=opt1;
+         admin[sno].opt2=opt2;
+          admin[sno].opt3=opt3;
+           admin[sno].opt4=opt4;
+           admin[sno].ans=ans;
+           answers.push(ans);
+           sno++;
+    }
+
+    function showques()public view returns(string,string,string,string,string){
+        i++;
+        return (admin[i].ques,admin[i].opt1,admin[i].opt2,admin[i].opt3,admin[i].opt4);
+    }
+    function enter_detail(uint256 id,string name)public {
+   
+           if(arr1.length == 0)
+           {
+               userdetail[id].id=id;
+               userdetail[id].name=name;
+               userdetail[id].in_time=now;
+               arr1.push(id);
+               array_length++;
+           }
+           else
+           {
+               userdetail[id].id=id;
+               userdetail[id].name=name;
+               userdetail[id].in_time=now;
+               arr1.push(id);
+               array_length++;
+
+           }
+            
+       }
+       
+       function get_data() public constant returns(uint256)
+       {
+           return array_length;
+       }
+         function get_data1(uint256 i) public constant returns(uint256)
+       {
+           return arr1[i];
+       }
+       
+        function get_answe() public view returns(uint[])
+        {
+            return answers;
+        }
+        function get_array(uint256[] aaa,uint256 id)public payable returns(uint256)
+        {   
+            arr2 = aaa;
+              uint256 mark=0;
+            for(uint256 i=0;i<arr2.length;i++){
+                if(arr2[i]==answers[i])
+                {
+                 mark++;   
+                }
+                
+                
+            }
+             userdetail[id].mark=mark;
+             return mark;
+            // arr2.length=0;
+            // for(uint256 i=0;i<aaa.length;i++){
+            //     arr2[i]=aaa[i];
+                
+            // }
+            
+        }
+       
+      
+      }
+       
