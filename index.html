@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Multiple Choice Question</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
+  <script src="app.js"></script>
+  <script src="web3.min.js"></script> 
+  <link rel="stylesheet" href="app.css" />
+ 
+</head>
+<body onload="showTime(),usertable()" style="background:whitesmoke">
+
+<div class="container">
+ <center><b><h2>MCQ of BlockChain</h2></b></center>
+  
+  <ul class="nav nav-tabs">
+    <li class="active" ><a data-toggle="tab" id="homemenu" href="#home">Admin</a></li>
+    <li ><a data-toggle="tab"id="usermenu" href="#user">User</a></li>
+    <li id="MyClockDisplay" class="clock"></li>
+  </ul>
+
+ <!-- sub menu -->
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      
+<!-- login -->
+<br><br><br><br>
+
+<div class="row">
+<div class="col-sm-6">
+<form id="login">
+    
+   <legend>LogIn</legend>
+   <!-- <div class="form-group">
+      <label for="inputlg">Enter Your Id:</label>
+      <input class="form-control" placeholder="Enter your Id here" id="uid" style ="width:350px" type="text" maxlength="10">
+    </div> -->
+    <div class="form-group">
+        <label for="inputlg">Admin Password:</label>
+        <input class="form-control" placeholder="Enter your Password" id="pwd"style ="width:350px" type="password" maxlength="10">
+      </div>
+    
+   <div class="form-group">
+      <button type="button" class="btn btn-success"  id="showoption"  onclick="lgin();" style ="width:170px">Login</button>
+      <button type="button" class="btn btn-danger" id="cancelshowoption"  data-toggle="tab" style ="width:170px">Cancel</button>                    
+  </div>
+ 
+ </form>
+ </div>
+</div>
+ <!--  -->
+
+       <div class="container" id="showpanel" style="display:none">
+            
+              <ul class="pager">
+              <li> <button id="setqst"class="btn1 btn btn-success">Set Question</button></li>
+              <li><button id="userdet"class="btn2 btn btn-success" onclick="usertable()">User Details</button></li>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <li><button id="logoutbtn"class="btn btn-danger">Logout</button></li>
+              </ul>
+                     
+          </div>
+ 
+       
+<div id="ram" style="display:none">
+    <div class="row">
+        <div class="col-sm-9">
+     
+      <form id="br">
+         
+
+          <div class="form-group">
+          <label for="inputlg">Type Your Question:</label>
+          <input class="form-control" id="inputlg" placeholder="ex:how many times clock loops a day?"  type="text" maxlength="100">
+        </div>
+    
+         <div class="form-group">
+          <label for="inputsm">Set Option 1:</label>
+          <input class="form-control" id="inputsm" placeholder=" ex@ A: 10" type="text"style ="width:350px;" maxlength="60">
+        </div>
+    
+        <div class="form-group">
+            <label for="inputsm">Set Option 2:</label>
+            <input class="form-control" id="input2"placeholder=" ex@ B: 20"  type="text"style ="width:350px" maxlength="60">
+          </div>
+    
+          <div class="form-group">
+              <label for="inputsm">Set Option 3:</label>
+              <input class="form-control" id="input3" placeholder=" ex@ C: 23" type="text"style ="width:350px" maxlength="60">
+            </div>
+    
+            <div class="form-group">
+                <label for="inputsm">Set Option 4:</label>
+                <input class="form-control" id="input4" placeholder=" ex@ D: 24"  type="text"style ="width:350px" maxlength="60">
+              </div>
+    
+              <div class="form-group">
+                  <label for="inputsm">Set Key Option:</label>
+                  <input class="form-control" id="input5"  placeholder=" ex@ Correct Answer is D: 24" min="1" max="4" onkeypress="return isNumber(event)" type="text"style ="width:350px"  maxlength="1">
+                </div><br>
+    
+                <div class="form-group">
+                    <!-- <input type="submit" value="Set" id="setbtn" class="btn btn-success" style ="width:170px"  onclick="incrementValue(),add_question()"></input> -->
+                     <button type="button" id="setbtn" class="btn btn-success" style ="width:170px"  onclick="validatesetquetion()">Set</button> 
+                    <!-- <button type="button" class="btn btn-info" id="finish" data-toggle="tab" href="#home"  style ="width:170px">Finish</button>                     -->
+                </div>
+              
+               
+  </form>
+  <!-- " -->
+<div class="col-sm-6">
+  <center> <div class="loader" id="ld" style="display:none;"  ></div></center>
+  </div>
+  
+      </div>
+     </div> 
+  
+  </div>
+  <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="listofinvester"  style="display:none">
+	<div class="my-auto">
+
+        <center><h2>USER LIST</h2></center><BR>
+            <div  id="tabledata" class="table  table-striped table-bordered tabledata "style="background:white"> </div> 
+				</div>
+</section>
+    </div>  
+
+
+    <!--  -->
+
+
+
+    
+    <div id="user" class="tab-pane fade">
+        <div class="container">
+           
+         <ul class="pager">
+         <li><button class="btn btn-info"  id ="reg" >User Registration </button></li>
+         <li><button class="btn btn-success"  id="st" onclick="startquiz()">Start Quiz</button></li>
+         </ul>
+                
+     </div>
+    <div id ="register" style="display:none">
+     <form name="butt" id="userregpage">
+         <div class="form-group">
+         <label for="inputlg">User Id:</label>
+         <input class="form-control" placeholder="user Id" style ="width:350px" id="u_name"  min="1" max="4" onkeypress="return isNumber(event)"   type="text" maxlength="3">
+       </div>
+
+       <div class="form-group">
+           <label for="inputlg">User Name:</label>
+           <input class="form-control" placeholder="User Name" style ="width:350px"  id="u_id"type="text" maxlength="30" onKeyPress="return ValidateAlpha(event);" onkeyup="toggleButton(this,'Registerid');" >
+         </div>
+
+         <div class="form-group">
+             <button type="button" class="btn btn-success" style ="width:170px"  id="Registerid"  disabled='disabled' onclick="fun(),userRegisteration()">Register</button>
+             
+         </div>
+
+         
+            <!-- <center> <div class="loader" id="ld" style="display:none"></div></center> -->
+         
+   </form>
+   <div class="col-sm-6">
+        <center> <div class="loader" id="userld" style="display:none;"  ></div></center>
+        </div>
+    
+   </div>
+
+   <div id="startquiz" style="display:none">
+     <form>
+        
+<div class="container">
+  
+ <form id="qstfromdb">
+     <div class="form-group">
+         <!-- <label for="inputlg"></label> -->
+         <input type=text  placeholder="Question from db" style ="width:750px" id="que" type="text" readonly >
+       </div>
+<br><br>
+<p><b><font size="3px"> Multiple Choice</font></b> </p><br>
+      <div class="form-group">
+          
+      <label> <input type=radio name=radio value="1" size=20px>&nbsp;<input  placeholder="option1" id="id1" type="text" maxlength="30" readonly></label>
+         </div>
+    <div class="form-group">
+          
+<label> <input type=radio name=radio value="2" size=5px>&nbsp;<input placeholder="option1" id="id2" type="text" maxlength="30" readonly></label>
+         </div>
+    <div class="form-group">
+          
+<label> <input type=radio name=radio value="3" size=5px>&nbsp;<input placeholder="option1" id="id3" type="text" maxlength="30" readonly></label>
+         </div>
+    <div class="form-group">
+          
+<label> <input type=radio name=radio value="4" size=5px>&nbsp;<input placeholder="option1" id="id4" type="text" maxlength="30" readonly></label>
+         </div>
+         You selected: 
+				<label id="choiceLabel"></label>
+          <div class="form-group">                    
+                     <button type="reset"  class="btn btn-info" style ="width:170px" onclick="window.location.href='#User',startquiz()">Next >></button>    
+
+                     <input type="text" placeholder="user Id" style ="width:350px" id="uid"  type="text" maxlength="3">
+                     <button type="reset"  class="btn btn-success" style ="width:170px"  onclick="arrpush()">Finish Test</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                       
+                </div>
+              
+         </ul>
+   </form>
+   <center> <div class="loader" id="finishtestbtn" style="display:none;"  ></div></center>
+         <!-- <center> <br><br><button class="btn btn-success"type="reset" onclick="window.location.href='#User'" >&nbsp;Next&nbsp;</button></center> -->
+ </div>
+     </div>
+
+
+  </div>
+  <script>
+    var b=[];
+(function (){
+	var count=0;
+    var radios = document.getElementsByName('radio');
+    console.log(radios);
+    for(var i = 0; i < radios.length; i++){
+        radios[i].onclick = function(){
+      var ss=document.getElementById('choiceLabel').innerText = this.value;
+		b.push(ss);
+
+			
+        }
+		
+    }
+	console.log(obj);
+})();
+
+function arrpush(){
+    document.getElementById('finishtestbtn').style.display = 'block';
+var iii=document.getElementById("uid").value;
+Contract_address.get_array(b,iii,function(error,result){
+		if(!error){
+            alert(result);
+            hash(result);
+		}
+		else{
+            console.error(error);
+            document.getElementById('finishtestbtn').style.display = 'none';
+		}
+	});
+	
+	
+}
+function length(){
+    b.length=0;
+}
+</script>
+  
+</body>
+</html>
